@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head lang="ru">
+    <meta charset="UTF-8">
+    <title> Досрок.ру: {{ subject_name }} </title>
+
+    {% load staticfiles %}
+    <style type="text/css">
+        .spoiler_body {display:none;}
+        .spoiler_links {cursor:pointer;}
+    </style>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
+    <script src="{% static 'bootstrap/js/bootstrap.js' %}" type="text/javascript"></script>
+    
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.spoiler_links').click(function(){
+                $(this).parent().children('div.spoiler_body').toggle('normal');
+                if ($(this).text()=='свернуть') 
+                    $(this).text('развернуть');
+                else 
+                    $(this).text('свернуть');
+                return false;
+            });
+        });
+    </script>
+
+    </head>
+    
+    <body>
+    
+    <div style="margin:60px">
+    
+    <p style="align:center"> КОНКУРС ЗА ПРАВО ПОПАСТЬ НА ДОСРОЧНЫЙ ЭКЗАМЕН ПО {{ subject_name }} </p>
+    
+    <p>
+    {% if is_opened %}
+    Текущее состояние: конкурс открыт.
+    Дата окончания конкурса: {{ ending_date }}
+    {% else %}  
+    Текущее состояние: конкурс закрыт.
+    {% endif %}
+    </p>
+    
+   
+    <div style="display:inline-block">
+    Правила конкурса  
+    (<a href="" class="spoiler_links">развернуть</a>)
+    <div class="spoiler_body">
+        <p>
+        ЭТО ПРАВИЛА КОНКУРСА, ДЕТКА!
+        </p>
+    </div>
+    </div>
+        
+    <p>
+    Список задач (развернуть/свернуть).
+    </p>
+    
+    <p>
+    Список участников (развернуть/свернуть).
+    </p>
+    
+    <p>
+    {% if is_opened %}
+    {% else %}
+    Итоги. Список допущенных к досрочному экзамену (развернуть/свернуть).
+    {% endif %}
+    </p>
+    
+    <p>
+    Дата проведения досрочного экзамена: 
+        {% if date %}
+        {{ date }}
+        {% else %}
+        неизвестна
+        {% endif %}
+        
+        Место проведения досрочного экзамена: 
+            {% if place %}
+            {{ place }}
+            {% else %}
+            неизвестно
+            {% endif %}
+            </p>
+            
+            <p>
+            Экзаменационная программа (развернуть/свернуть).
+            </p>
+            <p>
+            Примеры задач на досрочном экзамене (развернуть/свернуть).
+            </p>
+            </div>
+    </body>
+</html>
