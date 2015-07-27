@@ -42,17 +42,17 @@ class Problem(models.Model):
 
 
 class Student(models.Model):
-    lastname = models.CharField('Фамилия', max_length = 50, blank=True)
-    firstname = models.CharField('Имя', max_length = 50, blank=True)
-    group = models.PositiveIntegerField('Группа', blank=True)
-    solved_problems = models.ManyToManyField(Problem)
+    lastname = models.CharField('Фамилия', max_length=50, blank=True)
+    firstname = models.CharField('Имя', max_length=50, blank=True)
+    group = models.CharField('Группа', max_length=6, blank=True)
+    solved_problems = models.ManyToManyField(Problem, blank=True)
     KID = models.CharField("ID", max_length=10, blank=True, default=0)
-    rating = models.DecimalField("Рейтинг", max_digits=11, decimal_places=8, default=decimal.Decimal('Infinity'))
+    rating = models.DecimalField('Рейтинг', max_digits=11, decimal_places=8, default=decimal.Decimal('0.0'))
     is_allowed = models.BooleanField('Допуск', default = False)
     nec_conditions = models.BooleanField('Необходимые условия', default = False)
     recommendation = models.BooleanField('Рекомендация преподавателя', default = False)
     PRS = models.PositiveIntegerField("БРС", default=0)
     test_mark = models.PositiveIntegerField("Семестровая", default=0)
     def __str__(self):
-        return "{0} {1} {2}".format(lastname, firstname, group)
+        return "{0} {1} {2}".format(self.lastname, self.firstname, self.group)
 
