@@ -3,6 +3,10 @@
 from django.db import models
 import decimal
 from django.utils import timezone
+from .usermodels import AbstractUser
+
+class MyUser(AbstractUser):
+    pass
 
 problem_shift = 100000
 
