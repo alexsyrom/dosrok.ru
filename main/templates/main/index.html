@@ -92,11 +92,11 @@
     </button>
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
-		{% for problem in problem_list %}
         <ol>
-			<li> {{problem.title}}нах (формат) </li>
-        </ol>
+		{% for problem in problem_list %}
+		<li> {{problem.title}} {{problem.student_num}} {{problem.rating}} </li>
 		{% endfor %}
+        </ol>
     </div>
     </div>
 
@@ -124,15 +124,17 @@
       </tr>
     </thead>
     <tbody>
+	{% for student in student_list %}
       <tr>
-        <td>Иван</td>
-        <td>Иванов</td>
-        <td>221</td>
-        <td>1, 2, 5</td>
-        <td>выполнены</td>
-        <td>100</td>
-        <td>допущен</td>
+		<td>{{student.firstname}}</td>
+        <td>{{student.lastname}}</td>
+        <td>{{student.group}}</td>
+        <td>{{student.get_problem_list}}</td>
+        <td>{{student.nec_conditions}}</td>
+        <td>{{student.rating}}</td>
+        <td>{{student.is_allowed}}</td>
       </tr>
+	  {% endfor %}
     </tbody>
     </table>
     </div>
