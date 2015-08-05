@@ -33,6 +33,10 @@ AUTH_USER_MODEL = 'main.MyUser'
 # Application definition
 
 INSTALLED_APPS = (
+    'admin_tools',
+    'admin_tools.theming',
+    'admin_tools.menu',
+    'admin_tools.dashboard',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

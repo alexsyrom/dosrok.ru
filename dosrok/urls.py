@@ -19,5 +19,6 @@ from main.views import Index
 
 urlpatterns = [
     url(r'^$', Index.as_view(), name='index'),
+    url(r'^admin_tools/', include('admin_tools.urls')),
     url(r'^admin/', include(admin.site.urls)),
 ]
