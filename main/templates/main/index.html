@@ -2,17 +2,20 @@
 <html>
     <head lang="ru">
     <meta charset="UTF-8">
-    <title> Досрок.ру: {{ subject_name }} </title>
+    <title> Досрок.ру </title>
 
     {% load staticfiles %}
     <style type="text/css">
         .spoiler_body {display:none;}
         .spoiler_links {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .spoiler_links:visited {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .spoiler_links:active {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .spoiler_links:link {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .spoiler_links:hover {text-decoration: none}
         .title {font-weight: bold;}
         .main_title {font-weight: bold; text-align: center;}
     </style>
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <!-- <link rel="stylesheet" href="../static/bootstrap/css/bootstrap.min.css"> -->
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.js"></script>
     <script src="{% static 'bootstrap/js/bootstrap.js' %}" type="text/javascript"></script>
@@ -92,11 +95,28 @@
     </button>
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
-        <ol>
-		{% for problem in problem_list %}
-		<li> {{problem.title}} {{problem.student_num}} {{problem.rating}} </li>
-		{% endfor %}
-        </ol>
+    <div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Название</th>
+        <th>Количество зачтённых решений</th>
+        <th>Рейтинг</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for problem in problem_list %}
+      <tr>
+        <td>{{ forloop.counter0|add:1 }}</td>
+        <td>{{ problem.title }}<a href="/problemurl"> (формат)</a></td>
+        <td>{{problem.student_num}}</td>
+        <td>{{problem.rating}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    </div>
     </div>
     </div>
 
@@ -111,9 +131,11 @@
 
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
+    <div class="table-responsive">
     <table class="table table-striped">
     <thead>
       <tr>
+        <th>#</th>
         <th>Имя</th>
         <th>Фамилия</th>
         <th>Группа</th>
@@ -126,17 +148,19 @@
     <tbody>
 	{% for student in student_list %}
       <tr>
+        <td>{{ forloop.counter0|add:1 }}</td>
 		<td>{{student.firstname}}</td>
         <td>{{student.lastname}}</td>
         <td>{{student.group}}</td>
         <td>{{student.get_problem_list}}</td>
-        <td>{{student.nec_conditions}}</td>
+        <td>{% if student.nec_conditions %} выполнены {% else %} <span style="color: red">не выполнены</span> {% endif %}</td>
         <td>{{student.rating}}</td>
-        <td>{{student.is_allowed}}</td>
+        <td>{% if student.is_allowed %} допущен {% else %} <span style="color: red">не допущен</span> {% endif %}</td>
       </tr>
 	  {% endfor %}
     </tbody>
     </table>
+    </div>
     </div>
     </div>
 
@@ -147,9 +171,22 @@
     <span class="title">Итоги. Список допущенных к досрочному экзамену</span>
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
-        <ol>
-        <li>Первый Допущенный, группа</li>
-        </ol>
+    <div class="table-responsive">
+    <table class="table table-striped table-responsive">
+    <thead>
+      <tr>
+        <th>  </th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for student in student_list %} <!-- here should be other student_list --> 
+      <tr>
+        <td> {{ forloop.counter0|add:1 }}. {{student.firstname}} {{student.lastname}}, {{student.group}} группа </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    </div>
     </div>
     </div>
     {% endif %}
@@ -200,9 +237,24 @@
     </button>
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
-        <ol>
-        <li>Первая задача (формат)</li>
-        </ol>
+     <div class="table-responsive">
+    <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Задача</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for problem in problem_list %} <!-- other list should be there! -->
+      <tr>
+        <td>{{ forloop.counter0|add:1 }}</td>
+        <td>{{ problem.title }}<a href="/problemurl"> (формат)</a></td>
+      </tr>
+      {% endfor %}
+    </tbody>
+    </table>
+    </div>
     </div>
     </div>
 
