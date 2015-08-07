@@ -202,14 +202,14 @@
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
     <div class="table-responsive">
-    <table class="table table-striped table-responsive">
+    <table class="table table-striped">
     <thead>
       <tr>
         <th>  </th>
       </tr>
     </thead>
     <tbody>
-      {% for student in student_list %} <!-- here should be other student_list --> 
+      {% for student in allowed_student_list %} 
       <tr>
         <td> {{ forloop.counter0|add:1 }}. {{student.firstname}} {{student.lastname}}, {{student.group}} группа </td>
       </tr>
@@ -284,21 +284,22 @@
       </tr>
     </thead>
     <tbody>
-        {% for problem in problem_list %} <!-- other list should be there! -->
+        {% comment %}
+        {% for problem in example_list %}
       <tr>
         <td>{{ forloop.counter0|add:1 }}</td>
-        <td>{{ problem.title }}(<a href="/problemurl">формат</a>)</td>
+        <td>{{ problem.title }} (<a href="/problemurl">формат</a>)</td>
         <td>
-        {% comment %}
         {% if user.is_authenticated %}
         <a href="{% url 'admin:main_example_change' problem.id %}"><button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
         </button></a>
         {% endif %}
-        {% endcomment %}
+       
         </td>
       </tr>
       {% endfor %}
+        {% endcomment %}
     </tbody>
     </table>
     </div>

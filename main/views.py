@@ -9,4 +9,5 @@ class Index(generic.ListView):
    def get_context_data(self, *args, **kwargs):
        context = super(Index, self).get_context_data(*args, **kwargs)
        context['student_list'] = Student.objects.all()
+       context['allowed_student_list'] = Student.objects.all().filter(is_allowed=True)
        return context
