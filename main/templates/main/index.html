@@ -110,22 +110,43 @@
       <tr>
         <th>#</th>
         <th>Название</th>
+        <th>Состояние задачи</th>
+        <th>Дата окончания конкурса</th>
         <th>Количество зачтённых решений</th>
         <th>Рейтинг</th>
+        <th>Решение задачи</th>
+        <th>Комментарии и подсказки</th>
         <th></th>
       </tr>
     </thead>
     <tbody>
         {% for problem in problem_list %}
       <tr>
-        <td>{{ forloop.counter0|add:1 }}</td>
+        <td>{{ problem.number }}</td>
         <td>{{ problem.title }} (<a href="/problemurl">формат</a>)</td>
+        <td>{{ problem.get_state_display }}</td>
+        <td>{% if problem.end_date %}
+        {{ problem.end_date }}
+        {% else %}
+        Не указана
+        {% endif %}
+        </td>
         <td>{{ problem.student_num }}</td>
         <td>
         {% if problem.rating %}
         {{ problem.rating }}
         {% else %}
         &infin;
+        {% endif %}
+        </td>
+        <td>
+        {% if problem.solution %}
+        {{ problem.solution }}
+        {% endif %}
+        </td>
+        <td>
+        {% if problem.comment %}
+        {{ problem.rating }}
         {% endif %}
         </td>
         <td>
