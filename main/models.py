@@ -13,9 +13,18 @@ problem_shift = 100000
 
 class Problem(models.Model):
     title = models.CharField("Название", max_length=200)
+    is_title_hidden = models.BooleanField('Скрыто', default = False)
+
     statement = models.FileField("Условие")
+    is_statement_hidden = models.BooleanField('Скрыто', default = False)
+
     number = models.PositiveIntegerField("Номер")
+    is_number_hidden = models.BooleanField('Скрыто', default = False)
+
     KID = models.CharField("ID", max_length=10, editable=False)
+    #is_KID_hidden = models.BooleanField('Скрыто', default = False)
+    # always hidden
+
     OPENED = 'OPENED'
     CLOSED = 'CLOSED'
     STATE_CHOICES = (
@@ -23,11 +32,22 @@ class Problem(models.Model):
         (CLOSED, 'Конкурс закрыт'),
     )
     state = models.CharField("Конкурсное состояние", max_length=10, choices=STATE_CHOICES)
+    is_state_hidden = models.BooleanField('Скрыто', default = False)
+
     end_date = models.DateField("Дата окончания конкурса", blank=True, null=True)
+    is_end_date_hidden = models.BooleanField('Скрыто', default = False)
+
     student_num = models.PositiveIntegerField("Число студентов, решивших задачу", default=0, editable=False)
+    is_student_num_hidden = models.BooleanField('Скрыто', default = False)
+
     rating = models.DecimalField("Рейтинг", max_digits=9, decimal_places=8, default=decimal.Decimal('0.0'), editable=False) #MySql can't in infinity
+    is_rating_hidden = models.BooleanField('Скрыто', default = False)
+
     solution = models.FileField("Решение", blank=True, null=True)
+    is_solution_hidden = models.BooleanField('Скрыто', default = False)
+
     comment = models.FileField("Комментарий", blank=True, null=True)
+    is_comment_hidden = models.BooleanField('Скрыто', default = False)
     
     def __str__(self):
         return self.title
