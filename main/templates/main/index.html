@@ -41,42 +41,52 @@
     
     <h3 class="main_title"> 
     КОНКУРС ЗА ПРАВО ПОПАСТЬ НА ДОСРОЧНЫЙ ЭКЗАМЕН ПО ТФКП 
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     </h3>
     
     {% if is_opened %}
     <div class="well">
     <div>
     <span class="title">Текущее состояние:</span> конкурс открыт.
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     </div>
 
     <div>
     <span class="title">Дата окончания конкурса:</span> {{ ending_date }}
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     </div>
     
     </div>
     {% else %}  
     <div class="well">
     <span class="title">Текущее состояние:</span> конкурс закрыт.
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     </div>
     {% endif %}
     
     <div class="well">
     <span class="title">Правила конкурса</span>
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
         <p>
@@ -87,12 +97,14 @@
     
     <div class="well">
     <span class="title">Список задач</span>
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
     <div class="table-responsive">
@@ -122,12 +134,14 @@
 
     <div class="well">
     <span class="title">Список участников</span>
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
 
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
@@ -199,9 +213,11 @@
         {% else %}
         неизвестна
         {% endif %}
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     </p>
     <p>
     <span class="title">Место проведения досрочного экзамена:</span>
@@ -210,17 +226,21 @@
         {% else %}
             неизвестно
         {% endif %}
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     </p>
     </div>
 
     <div class="well">
     <span class="title">Экзаменационная программа</span>
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
         Ссылка на программу (формат)
@@ -229,12 +249,14 @@
     
     <div class="well">
     <span class="title">Примеры задач досрочного экзамена</span>
+    {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
     </button>
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
+    {% endif %}
     (<a href="" class="spoiler_links">развернуть</a>)
     <div class="spoiler_body">
      <div class="table-responsive">
