@@ -9,6 +9,20 @@ from django.db.models.signals import m2m_changed
 class MyUser(AbstractUser):
     pass
 
+class Main(models.Model):
+    is_opened = models.BooleanField('Конкурс открыт', default=True)
+    rules = models.TextField('Правила конкурса', default='')
+    date = models.DateField("Дата проведения досрочного экзамена", blank=True, null=True)
+    place = models.CharField("Место проведения досрочного экзамена", default='', max_length=100)
+    program =models.FileField("Экзаменационная программа", blank=True, null=True) 
+
+class Example(models.Model):
+    title = models.CharField("Название", max_length=200)
+    statement = models.FileField("Условие")
+    comment = models.FileField("Комментарий", blank=True, null=True)
+    def __str__(self):
+        return self.title
+ 
 problem_shift = 100000
 
 class Problem(models.Model):
@@ -31,7 +45,8 @@ class Problem(models.Model):
         (OPENED, 'Конкурс открыт'),
         (CLOSED, 'Конкурс закрыт'),
     )
-    state = models.CharField("Конкурсное состояние", max_length=10, choices=STATE_CHOICES)
+    #state = models.CharField("Конкурсное состояние", max_length=10, choices=STATE_CHOICES)
+    state = models.BooleanField("Конкурс открыт", default=True)
     is_state_hidden = models.BooleanField('Скрыто', default = False)
 
     end_date = models.DateField("Дата окончания конкурса", blank=True, null=True)
