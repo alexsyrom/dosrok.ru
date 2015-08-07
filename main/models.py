@@ -9,12 +9,15 @@ from django.db.models.signals import m2m_changed
 class MyUser(AbstractUser):
     pass
 
-class Main(models.Model):
+class Subject(models.Model):
+    title = models.CharField("Название", max_length=200)
     is_opened = models.BooleanField('Конкурс открыт', default=True)
     rules = models.TextField('Правила конкурса', default='')
     date = models.DateField("Дата проведения досрочного экзамена", blank=True, null=True)
     place = models.CharField("Место проведения досрочного экзамена", default='', max_length=100)
     program =models.FileField("Экзаменационная программа", blank=True, null=True) 
+    def __str__(self):
+        return self.title
 
 class Example(models.Model):
     title = models.CharField("Название", max_length=200)
