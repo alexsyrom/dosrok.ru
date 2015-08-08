@@ -14,6 +14,16 @@
         .spoiler_links:active {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
         .spoiler_links:link {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
         .spoiler_links:hover {text-decoration: none}
+
+        .student_spoiler_links {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .student_spoiler_links:visited {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .student_spoiler_links:active {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .student_spoiler_links:link {cursor:pointer; text-decoration: none; color: rgb(150, 150, 150); border-bottom: 1px dotted}
+        .student_spoiler_links:hover {text-decoration: none}
+
+        td.td_hidden {display: none;}
+        th.td_hidden {display: none;}
+
         .title {font-weight: bold;}
         .main_title {font-weight: bold; text-align: center;}
     </style>
@@ -30,6 +40,22 @@
                     $(this).text('развернуть');
                 else 
                     $(this).text('свернуть');
+                return false;
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $('.student_spoiler_links').click(function(){
+                if ($(this).text()=='свернуть') {
+                    $(this).text('развернуть');
+                    $(".td_hidden").hide();
+                }
+                else {
+                    $(this).text('свернуть');
+                    $(".td_hidden").show();
+                }
                 return false;
             });
         });
@@ -185,7 +211,10 @@
         <th>Фамилия</th>
         <th>Группа</th>
         <th>Номера решённых задач</th>
-        <th>Необходимые условия</th>
+        <th>Необходимые условия (<a href="" class="student_spoiler_links">развернуть</a>)</th>
+        <th class="td_hidden">Рекомендация преподавателя</th>
+        <th class="td_hidden">БРС</th>
+        <th class="td_hidden">Семестровая</th>
         <th>Рейтинг</th>
         <th>Итог</th>
         <th></th>
@@ -200,8 +229,22 @@
         <td>{{ student.group }}</td>
         <td>{{ student.get_problem_list }}</td>
         <td>{% if student.nec_conditions %} выполнены {% else %} <span style="color: grey">не выполнены</span> {% endif %}</td>
+        <td class="td_hidden">
+        {% if student.recommendation %}
+            рекомендован
+        {% else %}
+            не рекомендован
+        {% endif %}
+        </td>
+        <td class="td_hidden">{{ student.PRS }}</td>
+        <td class="td_hidden">{{ student.test_mark }}</td>
         <td>{{ student.rating }}</td>
-        <td>{% if student.is_allowed %} допущен {% else %} <span style="color: grey">не допущен</span> {% endif %}</td>
+        <td>{% if student.is_allowed %} 
+        допущен   
+        {% else %} 
+        <span style="color: grey">не допущен</span> 
+        {% endif %}
+        </td>
         <td>
         {% if user.is_authenticated %}
         <a href="{% url 'admin:main_student_change' student.id %}"><button type="button" class="btn btn-default btn-sm">
@@ -308,7 +351,6 @@
       </tr>
     </thead>
     <tbody>
-        {% comment %}
         {% for problem in example_list %}
       <tr>
         <td>{{ forloop.counter0|add:1 }}</td>
@@ -327,7 +369,6 @@
         </td>
       </tr>
       {% endfor %}
-        {% endcomment %}
     </tbody>
     </table>
     </div>
