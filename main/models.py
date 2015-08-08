@@ -106,6 +106,8 @@ class Student(models.Model):
         if not self.id:
             self.KID = "{0} {1} {2}".format(self.lastname, self.firstname, self.group)
         return super(Student, self).save(*args, **kwargs)
+    class Meta:
+        unique_together = (('lastname', 'firstname', 'group', ), )
 
 def update_rating(sender, instance, action, reverse, model, pk_set, **kwargs):
     if not pk_set:
