@@ -2,7 +2,7 @@
 <html>
     <head lang="ru">
     <meta charset="UTF-8">
-    <title> Досрок.ру </title>
+    <title> Досрок.ру: {{ subject.title }} </title>
 
     {% load staticfiles %}
     {% load tags %}
@@ -68,7 +68,7 @@
     <div style="margin:60px">
     
     <h3 class="main_title"> 
-		КОНКУРС ЗА ПРАВО ПОПАСТЬ НА ДОСРОЧНЫЙ ЭКЗАМЕН ПО {{ subject.title }} 
+		КОНКУРС ЗА ПРАВО ПОПАСТЬ НА ДОСРОЧНЫЙ ЭКЗАМЕН ПО КУРСУ &laquo;{{ subject.title|upper }}&raquo;
     {% if user.is_authenticated %}
     <button type="button" class="btn btn-default btn-sm">
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
@@ -150,38 +150,86 @@
     <tbody>
         {% for problem in problem_list %}
       <tr>
-        <td>{{ problem.number }}</td>
-        <td>{{ problem.title }} (<a href="{{ problem.statement.url }}">{{ problem.statement.url|extension }}</a>)</td>
-        <td>{{ problem.get_state_display }}</td>
-        <td>{% if problem.end_date %}
-        {{ problem.end_date }}
+        <td>
+        {% if problem.is_number_hidden %}
+            скрыто
         {% else %}
-        Не указана
+            {{ problem.number }}
         {% endif %}
         </td>
-        <td>{{ problem.student_num }}</td>
+
         <td>
-        {% if problem.rating %}
-        {{ problem.rating }}
+        {% if problem.is_title_hidden %}
+            скрыто
         {% else %}
-        &infin;
+            {{ problem.title }} (<a href="{{ problem.statement.url }}">{{ problem.statement.url|extension }}</a>)
         {% endif %}
         </td>
+
         <td>
-        {% if solution %}
-        Решение (<a href="{{ problem.solution.url }}">{{ problem.solution.url|extension }}</a>)
+        {% if problem.is_state_hidden %}
+            скрыто
+        {% else %}
+            {{ problem.get_state_display }}
         {% endif %}
         </td>
+
         <td>
-        {% if comment %}
-        Комментарий (<a href="{{ problem.comment.url }}">{{ problem.comment.url|extension }}</a>)
+        {% if problem.is_end_date_hidden %}
+            скрыто
+        {% else %}
+            {% if problem.end_date %}
+                {{ problem.end_date }}
+            {% else %}
+                не указана
+            {% endif %}
         {% endif %}
         </td>
+
+        <td>
+        {% if problem.is_student_num_hidden %}
+            скрыто
+        {% else %}
+            {{ problem.student_num }}
+        {% endif %}
+        </td>
+
+        <td>
+        {% if problem.is_rating_hidden %}
+            скрыто
+        {% else %}
+            {% if problem.rating %}
+                {{ problem.rating }}
+            {% else %}
+                &infin;
+            {% endif %}
+        {% endif %}
+        </td>
+
+        <td>
+        {% if problem.is_number_hidden %}
+            скрыто
+        {% else %}
+            {% if solution %}
+                Решение (<a href="{{ problem.solution.url }}">{{ problem.solution.url|extension }}</a>)
+            {% endif %}
+        {% endif %}
+        </td>
+
+        <td>
+        {% if problem.is_number_hidden %}
+            скрыто
+        {% else %}
+            {% if comment %}
+                Комментарий (<a href="{{ problem.comment.url }}">{{ problem.comment.url|extension }}</a>)
+            {% endif %}
+        {% endif %}
+        </td>
+
         <td>
         {% if user.is_authenticated %}
-        <a href="{% url 'admin:main_problem_change' problem.id %}"><button type="button" class="btn btn-default btn-sm">
-        <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-        </button></a>
+            <a href="{% url 'admin:main_problem_change' problem.id %}"><button type="button" class="btn btn-default btn-sm">
+            <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span></button></a>
         {% endif %}
         </td>
       </tr>
