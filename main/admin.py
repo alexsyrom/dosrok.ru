@@ -21,6 +21,7 @@ class ProblemAdmin(admin.ModelAdmin):
 
 class StudentAdmin(admin.ModelAdmin):
     readonly_fields = ('KID', 'rating',)
+    filter_horizontal = ('solved_problems',)
 
 admin.site.register(Problem, ProblemAdmin)
 admin.site.register(Student, StudentAdmin)
