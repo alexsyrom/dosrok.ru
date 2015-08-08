@@ -90,7 +90,7 @@ class Student(models.Model):
     lastname = models.CharField('Фамилия', max_length=50, blank=True)
     firstname = models.CharField('Имя', max_length=50, blank=True)
     group = models.CharField('Группа', max_length=6, blank=True)
-    solved_problems = models.ManyToManyField(Problem, blank=True)
+    solved_problems = models.ManyToManyField(Problem, verbose_name='Решённые задачи', blank=True)
     KID = models.CharField("ID", max_length=255, blank=True, editable=False, unique=True)
     rating = models.DecimalField('Рейтинг', max_digits=11, decimal_places=8, default=decimal.Decimal('0.0'), editable=False)
     is_allowed = models.BooleanField('Допуск', default = False)
