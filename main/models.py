@@ -18,6 +18,10 @@ class Subject(models.Model):
     program =models.FileField("Экзаменационная программа", blank=True, null=True) 
     def __str__(self):
         return self.title
+    class Meta:
+        verbose_name = 'Предмет'
+        verbose_name_plural = 'Предметы'
+
 
 class Example(models.Model):
     title = models.CharField("Название", max_length=200)
@@ -25,7 +29,11 @@ class Example(models.Model):
     comment = models.FileField("Комментарий", blank=True, null=True)
     def __str__(self):
         return self.title
- 
+    class Meta:
+        verbose_name = 'Пример'
+        verbose_name_plural = 'Примеры'
+
+
 problem_shift = 100000
 
 class Problem(models.Model):
@@ -84,6 +92,10 @@ class Problem(models.Model):
             return True
         else:
             return False
+    class Meta:
+        verbose_name = 'Задача'
+        verbose_name_plural = 'Задачи'
+
 
 
 class Student(models.Model):
@@ -108,6 +120,8 @@ class Student(models.Model):
         return super(Student, self).save(*args, **kwargs)
     class Meta:
         unique_together = (('lastname', 'firstname', 'group', ), )
+        verbose_name = 'Участник'
+        verbose_name_plural = 'Участники'
 
 def update_rating(sender, instance, action, reverse, model, pk_set, **kwargs):
     if not pk_set:
