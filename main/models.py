@@ -83,6 +83,8 @@ class Problem(models.Model):
             self.KID = "P{0}".format(problem_shift + self.number)
         if self.student_num > 0:
             self.rating = decimal.Decimal(1) / decimal.Decimal(self.student_num)
+        else:
+            self.rating = 0
         return super(Problem, self).save(*args, **kwargs)
     def is_opened(self):
         if self.end_date:
@@ -122,17 +124,24 @@ class Student(models.Model):
         verbose_name_plural = 'Участники'
 
 def update_rating(sender, instance, action, reverse, model, pk_set, **kwargs):
-    if not pk_set:
-        return
-    problems = list(instance.solved_problems.filter(pk__in=pk_set))
-    for problem in problems:
-        problem.student_num = problem.student_set.count()
-        problem.save()
-    for problem in problems:
-        for student in problem.student_set.all():
-            student.rating += problem.rating 
-            if problem.student_num > 1 and student.id != instance.id:
-                student.rating -= decimal.Decimal(1) / decimal.Decimal(problem.student_num - 1)
+    """
+    I'm really sorry, but Django don't send remove signal. It even doesn't do remove opearions, it clears all and after it adds.
+    So we need to do this fucking shit in 'Django way'
+    """
+    if action == 'post_add' or action == 'post_clear': #if somebody removes all problems, there will be no add signal
+        if action == 'post_add':
+            problems = set(instance.solved_problems.all())
+        else:
+            problems = instance.old_solved_problems
+        for problem in problems:
+            problem.student_num = problem.student_set.count()
+            problem.save()
+        problems_pk_set = [problem.pk for problem in problems]
+        students = set(Student.objects.filter(solved_problems__pk__in=problems_pk_set)) | set([instance,])
+        for student in students:
+            student.rating = sum([problem.rating for problem in student.solved_problems.only('rating')]) 
             student.save()
+    elif action == 'pre_clear':
+        instance.old_solved_problems = set(instance.solved_problems.all())
 
 m2m_changed.connect(update_rating, sender=Student.solved_problems.through)
