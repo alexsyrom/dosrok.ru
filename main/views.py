@@ -8,7 +8,7 @@ class Index(generic.ListView):
     context_object_name = 'problem_list'
     def get_context_data(self, *args, **kwargs):
         context = super(Index, self).get_context_data(*args, **kwargs)
-        context['student_list'] = Student.objects.all()
+        context['student_list'] = Student.objects.all().order_by('-rating')
         context['allowed_student_list'] = Student.objects.all().filter(is_allowed=True)
         context['example_list'] = Example.objects.all()
         context['subject'] = Subject.objects.all()[0]
