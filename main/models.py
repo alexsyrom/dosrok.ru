@@ -87,12 +87,9 @@ class Problem(models.Model):
     def is_opened(self):
         if self.end_date:
             if self.end_date > timezone.now():
-                self.state = Problem.CLOSED
+                self.state = False
                 self.save()
-        if self.state == Problem.OPENED:
-            return True
-        else:
-            return False
+        return self.state
     class Meta:
         verbose_name = 'Задача'
         verbose_name_plural = 'Задачи'
