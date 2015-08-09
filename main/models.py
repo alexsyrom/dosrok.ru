@@ -12,8 +12,9 @@ class MyUser(AbstractUser):
 class Subject(models.Model):
     title = models.CharField("Название", max_length=200)
     is_opened = models.BooleanField('Конкурс открыт', default=True)
+    end_date = models.DateField("Дата окончания конкурса", blank=True, null=True)
     rules = models.TextField('Правила конкурса', default='', blank=True)
-    date = models.DateField("Дата проведения досрочного экзамена", blank=True, null=True)
+    exam_date = models.DateField("Дата проведения досрочного экзамена", blank=True, null=True)
     place = models.CharField("Место проведения досрочного экзамена", default='', max_length=100, blank=True)
     program =models.FileField("Экзаменационная программа", blank=True, null=True) 
     def __str__(self):
