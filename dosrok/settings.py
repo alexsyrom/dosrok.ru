@@ -77,6 +77,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'dosrok.wsgi.application'
 
+ADMIN_TOOLS_INDEX_DASHBOARD = 'dosrok.dashboard.CustomIndexDashboard'
 
 # Database
 # https://docs.djangoproject.com/en/1.8/ref/settings/#databases
