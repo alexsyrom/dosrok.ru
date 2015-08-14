@@ -65,7 +65,6 @@
     
     <body>
     
-    <div style="margin:60px">
     
     <h3 class="main_title"> 
 		КОНКУРС ЗА ПРАВО ПОПАСТЬ НА ДОСРОЧНЫЙ ЭКЗАМЕН ПО КУРСУ &laquo;{{ subject.title|upper }}&raquo;
@@ -75,7 +74,7 @@
         </button></a>
     {% endif %}
     </h3>
-    
+	<div class='container'> 
     {% if subject.is_opened %}
     <div class="well clearfix">
 	<div class='pull-left'>
@@ -440,5 +439,7 @@
     </div>
 
     </div>
+    </div>
+
     </body>
 </html>
