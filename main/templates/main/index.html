@@ -33,18 +33,60 @@
     <script src="{% static 'bootstrap/js/bootstrap.js' %}" type="text/javascript"></script>
     
     <script type="text/javascript">
+
         $(document).ready(function(){
             $('.spoiler_links').click(function(){
-                $(this).parent().children('div.spoiler_body').toggle('normal');
-                if ($(this).text()=='свернуть') 
+				if ($(this).text()=='свернуть') { 
+                	$(this).parent().children('div.spoiler_body').hide('normal');
                     $(this).text('развернуть');
-                else 
+					localStorage.setItem( $(this).attr('id'), 'hidden' );
+				}
+				else {
+                	$(this).parent().children('div.spoiler_body').show('normal');
                     $(this).text('свернуть');
+					localStorage.setItem( $(this).attr('id'), 'shown' );
+				}
                 return false;
             });
+			$('.spoiler_links').each(function () { 
+				var expanded = localStorage.getItem( $(this).attr('id') ); 
+				if (expanded == 'shown') {
+					$(this).parent().children('div.spoiler_body').show(); 
+					$(this).text('свернуть')
+				} else {
+					$(this).parent().children('div.spoiler_body').hide();
+					$(this).text('развернуть')
+				}
+			});
+
+            $('.student_spoiler_links').click(function(){
+				if ($(this).text()=='свернуть') { 
+                	$(this).parent().children('div.spoiler_body').hide('normal');
+                    $(".td_hidden").hide();
+                    $(this).text('развернуть');
+					localStorage.setItem( $(this).attr('id'), 'hidden' );
+				}
+				else {
+                	$(this).parent().children('div.spoiler_body').show('normal');
+                    $(".td_hidden").show();
+                    $(this).text('свернуть');
+					localStorage.setItem( $(this).attr('id'), 'shown' );
+				}
+                return false;
+            });
+			$('.student_spoiler_links').each(function () { 
+				var expanded = localStorage.getItem( $(this).attr('id') ); 
+				if (expanded == 'shown') {
+                    $(".td_hidden").show();
+					$(this).text('свернуть')
+				} else {
+                    $(".td_hidden").hide();
+					$(this).text('развернуть')
+				}
+			});
         });
     </script>
-
+	{% comment %}
     <script type="text/javascript">
         $(document).ready(function(){
             $('.student_spoiler_links').click(function(){
@@ -55,12 +97,12 @@
                 else {
                     $(this).text('свернуть');
                     $(".td_hidden").show();
-                }
+            	}
                 return false;
             });
         });
     </script>
-
+	{% endcomment %}
     </head>
     
     <body>
@@ -118,7 +160,7 @@
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
     </button>
     {% endif %}
-    (<a href="" class="spoiler_links">развернуть</a>)
+    (<a href="" class="spoiler_links" id="rules"></a>)
     <div class="spoiler_body">
         <p>
         {{ subject.rules|linebreaks }}
@@ -133,7 +175,7 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button></a>
     {% endif %}
-    (<a href="" class="spoiler_links">развернуть</a>)
+    (<a href="" class="spoiler_links" id="problems">развернуть</a>)
     <div class="spoiler_body">
     <div class="table-responsive">
     <table class="table table-striped">
@@ -259,7 +301,7 @@
         </button></a>
     {% endif %}
 
-    (<a href="" class="spoiler_links">развернуть</a>)
+    (<a href="" class="spoiler_links" id="students">развернуть</a>)
     <div class="spoiler_body">
     <div class="table-responsive">
     <table class="table table-striped">
@@ -270,7 +312,7 @@
         <th>Фамилия</th>
         <th>Группа</th>
         <th>Номера решённых задач</th>
-        <th>Необходимые условия (<a href="" class="student_spoiler_links">развернуть</a>)</th>
+        <th>Необходимые условия (<a href="" class="student_spoiler_links" id="td_student">развернуть</a>)</th>
         <th class="td_hidden">Рекомендация преподавателя</th>
         <th class="td_hidden">БРС</th>
         <th class="td_hidden">Семестровая</th>
@@ -324,7 +366,7 @@
     {% else %}
     <div class="well">
     <span class="title">Итоги. Список допущенных к досрочному экзамену</span>
-    (<a href="" class="spoiler_links">развернуть</a>)
+    (<a href="" class="spoiler_links" id="results">развернуть</a>)
     <div class="spoiler_body">
     <div class="table-responsive">
     <table class="table table-striped">
@@ -382,7 +424,7 @@
         <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
         </button></a>
     {% endif %}
-    (<a href="" class="spoiler_links">развернуть</a>)
+    (<a href="" class="spoiler_links" id="program">развернуть</a>)
     <div class="spoiler_body">
         <p>
         {% if subject.program %}
@@ -401,7 +443,7 @@
         <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
         </button></a>
     {% endif %}
-    (<a href="" class="spoiler_links">развернуть</a>)
+    (<a href="" class="spoiler_links" id="examples">развернуть</a>)
     <div class="spoiler_body">
      <div class="table-responsive">
     <table class="table table-striped">
