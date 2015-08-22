@@ -12,14 +12,20 @@ class MyUser(AbstractUser):
 
 class Subject(models.Model):
     title = models.CharField("Название", max_length=200)
-    is_opened = models.BooleanField('Конкурс открыт', default=True)
-    end_date = models.DateField("Дата окончания конкурса", blank=True, null=True)
+    state = models.BooleanField('Конкурс открыт', default=True)
+    end_date = models.DateTimeField("Дата окончания конкурса", blank=True, null=True)
     rules = models.TextField('Правила конкурса', default='', blank=True)
     exam_date = models.DateField("Дата проведения досрочного экзамена", blank=True, null=True)
     place = models.CharField("Место проведения досрочного экзамена", default='', max_length=100, blank=True)
     program =models.FileField("Экзаменационная программа", blank=True, null=True) 
     def __str__(self):
         return self.title
+    def is_opened(self):
+        if self.end_date:
+            if self.end_date < timezone.now():
+                self.state = False
+                self.save()
+        return self.state
     class Meta:
         verbose_name = 'Предмет'
         verbose_name_plural = 'Предметы'
@@ -62,7 +68,7 @@ class Problem(models.Model):
     state = models.BooleanField("Конкурс открыт", default=True)
     is_state_hidden = models.BooleanField('Скрыто', default = False)
 
-    end_date = models.DateField("Дата окончания конкурса", blank=True, null=True)
+    end_date = models.DateTimeField("Дата окончания конкурса", blank=True, null=True)
     is_end_date_hidden = models.BooleanField('Скрыто', default = False)
 
     student_num = models.PositiveIntegerField("Число студентов, решивших задачу", default=0, editable=False)
@@ -88,7 +94,7 @@ class Problem(models.Model):
         return super(Problem, self).save(*args, **kwargs)
     def is_opened(self):
         if self.end_date:
-            if self.end_date > timezone.now():
+            if self.end_date < timezone.now():
                 self.state = False
                 self.save()
         return self.state

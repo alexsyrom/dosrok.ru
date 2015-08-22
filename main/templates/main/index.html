@@ -219,7 +219,7 @@
         {% if problem.is_state_hidden %}
             скрыто
         {% else %}
-			{% if problem.state%}
+			{% if problem.is_opened%}
 				Конкурс открыт
 			{% else %}
 				Конкурс закрыт
