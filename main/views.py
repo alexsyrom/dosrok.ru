@@ -11,7 +11,7 @@ class Index(generic.ListView):
         context['student_list'] = Student.objects.all().order_by('-rating')
         context['allowed_student_list'] = Student.objects.all().filter(is_allowed=True)
         context['example_list'] = Example.objects.all()
-        context['subject'] = Subject.objects.all()[0]
+        context['subject'] = Subject.objects.all().order_by('id')[0]
         return context
     def get_queryset(self):
         return Problem.objects.all().order_by('number')
