@@ -31,120 +31,106 @@ git clone https://github.com/alexsyrom/dosrok.ru.git
 ```
 
 Перейдите в созданную папку с кодом
-
-.. code-block:: shell
-
-    cd dosrok.ru
-
+```shell
+cd dosrok.ru
+```
 Создайте виртуальное окружение
+```shell
+mkvirtualenv --python=/usr/bin/python3.4 dosrok
+```
+Если произошла ошибка `mkvirtualenv: command not found`, введите следующие команды:
+```shell
+echo '' >> ~/.bashrc && echo 'source virtualenvwrapper.sh' >> .bashrc
+source virtualenvwrapper.sh
+```
 
-.. code-block:: shell
-
-    mkvirtualenv --python=/usr/bin/python3.4 dosrok
-
-Если произошла ошибка *"mkvirtualenv: command not found"*, введите следующие команды:
-
-.. code-block:: shell
-
-    echo '' >> ~/.bashrc && echo 'source virtualenvwrapper.sh' >> .bashrc
-    source virtualenvwrapper.sh
-
-Приглашение консоли должно теперь начинаться с (dosrok). Если этого не произошло, активируйте окружение вручную:
-
-.. code-block:: shell
-
-    workon dosrok
+Приглашение консоли должно теперь начинаться с `(dosrok)`. Если этого не произошло, активируйте окружение вручную:
+```shell
+workon dosrok
+```
 
 Установите зависимости:
-    
-.. code-block:: shell
+```shell
+pip install -r requirements.txt
+```
 
-    pip install -r requirements.txt
+В папке `dosrok` создайте файл `local_settings.py` со следующим содержанием (обратите внимание на комментарии):
+```python
+SECRET_KEY = 'kzqoq0=z1_&8lc8#nj=v@!a6-(7a0rvycm*s1+rhe5)s(k%2mr' 
+'''
+следует сгенерировать свой secret_key, 
+например, с помощью этого сайта 
+http://www.miniwebtool.com/django-secret-key-generator/
+'''
 
-В папке **dosrok** создайте файл **local_settings.py** со следующим содержанием (обратите внимание на комментарии):
+DEBUG = False
 
-.. code-block:: python
-    
-    SECRET_KEY = 'kzqoq0=z1_&8lc8#nj=v@!a6-(7a0rvycm*s1+rhe5)s(k%2mr' 
-    '''
-    следует сгенерировать свой secret_key, 
-    например, с помощью этого сайта 
-    http://www.miniwebtool.com/django-secret-key-generator/
-    '''
+# измените набор допустимых адресов при необходимости
+ALLOWED_HOSTS = ['dosrok.ru', 'www.dosrok.ru', '*dosrok_name*.pythonanywhere.com']
 
-    DEBUG = False
-
-    # измените набор допустимых адресов при необходимости
-    ALLOWED_HOSTS = ['dosrok.ru', 'www.dosrok.ru', '*dosrok_name*.pythonanywhere.com']
- 
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.mysql',
-            'NAME': 'dosrok$default',
-            'USER': 'dosrok',
-            'PASSWORD': 'password', # пароль, который вы задали на вкладке "Databases"
-            'HOST': 'dosrok.mysql.pythonanywhere-services.com',
-            'PORT': '3306',
-        }
-    }
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'dosrok$default',
+		'USER': 'dosrok',
+		'PASSWORD': 'password', # пароль, который вы задали на вкладке "Databases"
+		'HOST': 'dosrok.mysql.pythonanywhere-services.com',
+		'PORT': '3306',
+	}
+}
+```
 
 Вернитесь в папку проекта
-
-.. code-block:: shell
-
-    cd ~/dosrok.ru
+```shell
+cd ~/dosrok.ru
+```
 
 Подготовьте базу данных к работе
-
-.. code-block:: shell
-
-    python manage.py migrate
-
+```shell
+python manage.py migrate
+```
 
 Создайте суперпользователя.
-
-.. code-block:: shell
-
-    python manage.py createsuperuser
+```shell
+python manage.py createsuperuser
+```
 
 Соберите static файлы в нужную папку
-
-.. code-block:: shell
-
-    python manage.py collectstatic
+```shell
+python manage.py collectstatic
+```
 
 ###Шаг 4
 
 Вновь перейдите на вкладку "Web". Отредактируйте файл WSGI (расположен в секции Code), заменив содержимое на следующий код:
+```python
+# To use your own django app use code like this:
+import os
+import sys
 
-.. code-block:: python
+# assuming your django settings file is at '/home/*dosrok_name*/dosrok.ru/dosrok/settings.py'
+# and your manage.py is is at '/home/*dosrok_name*/dosrok.ru/manage.py'
+path = '/home/*dosrok_name*/dosrok.ru'
+if path not in sys.path:
+	sys.path.append(path)
 
-    # To use your own django app use code like this:
-    import os
-    import sys
+os.environ['DJANGO_SETTINGS_MODULE'] = 'dosrok.settings'
 
-    # assuming your django settings file is at '/home/*dosrok_name*/dosrok.ru/dosrok/settings.py'
-    # and your manage.py is is at '/home/*dosrok_name*/dosrok.ru/manage.py'
-    path = '/home/*dosrok_name*/dosrok.ru'
-    if path not in sys.path:
-        sys.path.append(path)
+# then, for django >=1.5:
+from django.core.wsgi import get_wsgi_application
+application = get_wsgi_application()
+```
 
-    os.environ['DJANGO_SETTINGS_MODULE'] = 'dosrok.settings'
-
-    # then, for django >=1.5:
-    from django.core.wsgi import get_wsgi_application
-    application = get_wsgi_application()
-
-
-Вернитесь на вкладку "Web". В секции "Virtualenv" настройте путь к окружению. Можно указать или полный путь "/home/*dosrok_name*/.virtualenvs/dosrok" или просто ввести dosrok, система сама дополнит путь.
+Вернитесь на вкладку "Web". В секции "Virtualenv" настройте путь к окружению. Можно указать или полный путь `/home/*dosrok_name*/.virtualenvs/dosrok` или просто ввести dosrok, система сама дополнит путь.
 
 В секции "Static files" добавьте следующие записи:
 
-.. code-block:: shell
-
+```shell
+тут таблицу надо
     URL  Directory
     /static /home/*dosrok_name*/dosrok.ru/static
     /media /home/*dosrok_name*/dosrok.ru/media
+```
 
 Теперь нажмите на кнопку "Reload" и дождитесь перезагрузки приложения.
 
