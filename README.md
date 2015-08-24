@@ -128,12 +128,10 @@ application = get_wsgi_application()
 
 В секции "Static files" добавьте следующие записи:
 
-```shell
-тут таблицу надо
-    URL  Directory
-    /static /home/dosrok/dosrok.ru/static
-    /media /home/dosrok/dosrok.ru/media
-```
+|URL|Directory|
+|---|---------|
+|/static|/home/dosrok/dosrok.ru/static|
+|/media|/home/dosrok/dosrok.ru/media|
 
 Теперь нажмите на кнопку "Reload" (сверху страницы) и дождитесь перезагрузки приложения.
 
