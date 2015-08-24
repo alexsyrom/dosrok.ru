@@ -27,7 +27,7 @@
 
 Введите следующую команду, чтобы загрузить исходники
 ```shell
-    git clone https://github.com/alexsyrom/dosrok.ru.git
+git clone https://github.com/alexsyrom/dosrok.ru.git
 ```
 
 Перейдите в созданную папку с кодом
