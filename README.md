@@ -1,5 +1,5 @@
 #Деплой на pythonanywhere.com
-Везде ниже предполагается, что вы зашли в свой аккаунт на pythonanywhere и ваш username dosrok
+Везде ниже предполагается, что вы зашли в свой аккаунт на pythonanywhere и ваш username dosrok.
 
 ##Пошаговая инструкция
 

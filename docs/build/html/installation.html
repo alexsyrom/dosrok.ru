@@ -25,6 +25,7 @@
     <script type="text/javascript" src="_static/doctools.js"></script>
     <script type="text/javascript" src="_static/translations.js"></script>
     <link rel="top" title="Документация dosrok 1.0" href="index.html" />
+    <link rel="prev" title="Досрок.ру: инструкция по установке" href="index.html" />
    
   
   <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9">
@@ -39,22 +40,22 @@
             
   <div class="section" id="pythonanywhere-com">
 <h1>Деплой на pythonanywhere.com<a class="headerlink" href="#pythonanywhere-com" title="Ссылка на этот заголовок">¶</a></h1>
-<p>Везде ниже предполагается, что вы зашли в свой аккаунт на pythonanywhere и ваш username <em>dosrok_name</em> <strong>(далее логин выделяется курсивом)</strong></p>
+<p>Везде ниже предполагается, что вы зашли в свой аккаунт на pythonanywhere и ваш логин dosrok_username</p>
 <div class="section" id="id1">
 <h2>Пошаговая инструкция<a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h2>
 <div class="section" id="id2">
 <h3>Шаг 1<a class="headerlink" href="#id2" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Перейдите на вкладку &#8220;Web&#8221; и добавьте новое приложение: &#8220;Add a new web app&#8221;.</p>
 <p>Укажите нужное доменное имя. Нажмите &#8220;Next&#8221;.</p>
-<p>Выберите &#8220;Manual configuration&#8221; из списка опций. Нажмите &#8220;Next&#8221; и дождитесь завершения процесса создания приложения.</p>
-<p>Теперь по адресу <em>dosrok_name</em>.pythonanywhere.com вы должны видеть страницу-заглушку.</p>
+<p>Выберите &#8220;Manual configuration&#8221; из списка опций. Далее выберите Python 3.4 и дождитесь завершения процесса создания приложения.</p>
+<p>Теперь по адресу dosrok_username.pythonanywhere.com вы должны видеть страницу-заглушку.</p>
 <p>Произведите нужные настройки у вашего доменного регистратора &#8211; создайте CNAME record, указывающий на адрес, указанный во вкладке &#8220;Web&#8221; для вашего приложения (webapp-XXXX.pythonanywhere.com).
 Подробнее на <a class="reference external" href="https://www.pythonanywhere.com/wiki/OwnDomains">https://www.pythonanywhere.com/wiki/OwnDomains</a></p>
 </div>
 <div class="section" id="id3">
 <h3>Шаг 2<a class="headerlink" href="#id3" title="Ссылка на этот заголовок">¶</a></h3>
 <p>Перейдите на вкладку &#8220;Databases&#8221; и задайте пароль (секция MySQL password).</p>
-<p>По умолчанию должна быть создана база <em>dosrok_name</em>$default. Если же её нет, создайте базу с таким именем в секции Create a database.</p>
+<p>По умолчанию должна быть создана база dosrok_username$default. Если же её нет, создайте базу с таким именем в секции Create a database.</p>
 </div>
 <div class="section" id="id4">
 <h3>Шаг 3<a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h3>
@@ -84,7 +85,11 @@
 <div class="highlight-shell"><div class="highlight"><pre>pip install -r requirements.txt
 </pre></div>
 </div>
-<p>В папке <strong>dosrok</strong> создайте файл <strong>local_settings.py</strong> со следующим содержанием (обратите внимание на комментарии):</p>
+<p>В папке <strong>dosrok</strong> создайте файл <strong>local_settings.py</strong></p>
+<div class="highlight-shell"><div class="highlight"><pre>nano dosrok/local_settings.py
+</pre></div>
+</div>
+<p>со следующим содержанием (обратите внимание на комментарии):</p>
 <div class="highlight-python"><div class="highlight"><pre><span class="n">SECRET_KEY</span> <span class="o">=</span> <span class="s">&#39;kzqoq0=z1_&amp;8lc8#nj=v@!a6-(7a0rvycm*s1+rhe5)s(k%2mr&#39;</span>
 <span class="sd">&#39;&#39;&#39;</span>
 <span class="sd">следует сгенерировать свой secret_key,</span>
@@ -92,36 +97,33 @@
 <span class="sd">http://www.miniwebtool.com/django-secret-key-generator/</span>
 <span class="sd">&#39;&#39;&#39;</span>
 
-<span class="n">DEBUG</span> <span class="o">=</span> <span class="bp">False</span>
+<span class="c"># DEBUG = False</span>
 
 <span class="c"># измените набор допустимых адресов при необходимости</span>
-<span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;dosrok.ru&#39;</span><span class="p">,</span> <span class="s">&#39;www.dosrok.ru&#39;</span><span class="p">,</span> <span class="s">&#39;*dosrok_name*.pythonanywhere.com&#39;</span><span class="p">]</span>
+<span class="n">ALLOWED_HOSTS</span> <span class="o">=</span> <span class="p">[</span><span class="s">&#39;dosrok.ru&#39;</span><span class="p">,</span> <span class="s">&#39;www.dosrok.ru&#39;</span><span class="p">,</span> <span class="s">&#39;dosrok_username.pythonanywhere.com&#39;</span><span class="p">]</span>
 
 <span class="n">DATABASES</span> <span class="o">=</span> <span class="p">{</span>
     <span class="s">&#39;default&#39;</span><span class="p">:</span> <span class="p">{</span>
         <span class="s">&#39;ENGINE&#39;</span><span class="p">:</span> <span class="s">&#39;django.db.backends.mysql&#39;</span><span class="p">,</span>
-        <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="s">&#39;dosrok$default&#39;</span><span class="p">,</span>
-        <span class="s">&#39;USER&#39;</span><span class="p">:</span> <span class="s">&#39;dosrok&#39;</span><span class="p">,</span>
+        <span class="s">&#39;NAME&#39;</span><span class="p">:</span> <span class="s">&#39;dosrok_username$default&#39;</span><span class="p">,</span>
+        <span class="s">&#39;USER&#39;</span><span class="p">:</span> <span class="s">&#39;dosrok_username&#39;</span><span class="p">,</span>
         <span class="s">&#39;PASSWORD&#39;</span><span class="p">:</span> <span class="s">&#39;password&#39;</span><span class="p">,</span> <span class="c"># пароль, который вы задали на вкладке &quot;Databases&quot;</span>
-        <span class="s">&#39;HOST&#39;</span><span class="p">:</span> <span class="s">&#39;dosrok.mysql.pythonanywhere-services.com&#39;</span><span class="p">,</span>
+        <span class="s">&#39;HOST&#39;</span><span class="p">:</span> <span class="s">&#39;dosrok_username.mysql.pythonanywhere-services.com&#39;</span><span class="p">,</span>
         <span class="s">&#39;PORT&#39;</span><span class="p">:</span> <span class="s">&#39;3306&#39;</span><span class="p">,</span>
     <span class="p">}</span>
 <span class="p">}</span>
 </pre></div>
 </div>
-<p>Вернитесь в папку проекта</p>
-<div class="highlight-shell"><div class="highlight"><pre><span class="nb">cd</span> ~/dosrok.ru
-</pre></div>
-</div>
+<p>Выйти из редактора можно сочетанием Ctrl+X, далее последовательно нажать Y и Enter для сохранения изменений.</p>
 <p>Подготовьте базу данных к работе</p>
 <div class="highlight-shell"><div class="highlight"><pre>python manage.py migrate
 </pre></div>
 </div>
-<p>Создайте суперпользователя.</p>
+<p>Создайте суперпользователя (последовательно отвечая на вопросы мастера. Внимание: имя пользователя должно быть валидным email-адресом).</p>
 <div class="highlight-shell"><div class="highlight"><pre>python manage.py createsuperuser
 </pre></div>
 </div>
-<p>Соберите static файлы в нужную папку</p>
+<p>Соберите static файлы в нужную папку (если будет задан вопрос о записи файлов в существующую папку, ответить &#8216;yes&#8217;)</p>
 <div class="highlight-shell"><div class="highlight"><pre>python manage.py collectstatic
 </pre></div>
 </div>
@@ -133,9 +135,9 @@
 <span class="kn">import</span> <span class="nn">os</span>
 <span class="kn">import</span> <span class="nn">sys</span>
 
-<span class="c"># assuming your django settings file is at &#39;/home/*dosrok_name*/dosrok.ru/dosrok/settings.py&#39;</span>
-<span class="c"># and your manage.py is is at &#39;/home/*dosrok_name*/dosrok.ru/manage.py&#39;</span>
-<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;/home/*dosrok_name*/dosrok.ru&#39;</span>
+<span class="c"># assuming your django settings file is at &#39;/home/dosrok_username/dosrok.ru/dosrok/settings.py&#39;</span>
+<span class="c"># and your manage.py is is at &#39;/home/dosrok_username/dosrok.ru/manage.py&#39;</span>
+<span class="n">path</span> <span class="o">=</span> <span class="s">&#39;/home/dosrok_username/dosrok.ru&#39;</span>
 <span class="k">if</span> <span class="n">path</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="p">:</span>
     <span class="n">sys</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">path</span><span class="p">)</span>
 
@@ -146,19 +148,43 @@
 <span class="n">application</span> <span class="o">=</span> <span class="n">get_wsgi_application</span><span class="p">()</span>
 </pre></div>
 </div>
-<p>Вернитесь на вкладку &#8220;Web&#8221;. В секции &#8220;Virtualenv&#8221; настройте путь к окружению. Можно указать или полный путь &#8220;/home/<em>dosrok_name</em>/.virtualenvs/dosrok&#8221; или просто ввести dosrok, система сама дополнит путь.</p>
+<p>Вернитесь на вкладку &#8220;Web&#8221;. В секции &#8220;Virtualenv&#8221; настройте путь к окружению. Можно указать или полный путь &#8220;/home/dosrok_username/.virtualenvs/dosrok&#8221; или просто ввести dosrok, система сама дополнит путь.</p>
 <p>В секции &#8220;Static files&#8221; добавьте следующие записи:</p>
-<div class="highlight-shell"><div class="highlight"><pre>URL  Directory
-/static /home/*dosrok_name*/dosrok.ru/static
-/media /home/*dosrok_name*/dosrok.ru/media
-</pre></div>
-</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="16%" />
+<col width="84%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">URL</th>
+<th class="head">Directory</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>/static</td>
+<td>/home/dosrok_username/dosrok.ru/static</td>
+</tr>
+<tr class="row-odd"><td>/media</td>
+<td>/home/dosrok_username/dosrok.ru/media</td>
+</tr>
+</tbody>
+</table>
 <p>Теперь нажмите на кнопку &#8220;Reload&#8221; и дождитесь перезагрузки приложения.</p>
 </div>
 <div class="section" id="id6">
 <h3>Шаг 5<a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h3>
-<p>Перейдите на <em>dosrok_name</em>.pythonanywhere.com/admin и войдите как суперпользователь, которого вы создали в конце шага 3.</p>
+<p>Перейдите на dosrok_username.pythonanywhere.com/admin и войдите как суперпользователь, которого вы создали в конце шага 3.</p>
 <p>В административном интерфейсе добавьте первый &#8220;Предмет&#8221;. Пока не создано ни одного предмета, при заходе на главную страницу будет выдана страница с ошибкой. Если в базе существует несколько предметов, то на главной будет информация о предмете, добавленном раньше остальных.</p>
+</div>
+<div class="section" id="id7">
+<h3>Шаг 6<a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h3>
+<p><strong>Этот этап необязателен для работы сайта, но существеннен с точки зрения безопасности.</strong></p>
+<p>Вернитесь в созданную на шаге 3 консоль и внесите изменение в файл local_settings.py:</p>
+<div class="highlight-shell"><div class="highlight"><pre>nano dosrok/local_settings.py
+</pre></div>
+</div>
+<p>На этом этапе нужно раскомментировать строчку DEBUG = False (убрать знак # перед ней) и сохранить файл.
+Во вкладке &#8220;Web&#8221; снова нажмите кнопку &#8220;Reload&#8221;.</p>
 <p>На этом процесс развёртывания сайта окончен.</p>
 </div>
 </div>
@@ -179,6 +205,7 @@
 <li><a class="reference internal" href="#id4">Шаг 3</a></li>
 <li><a class="reference internal" href="#id5">Шаг 4</a></li>
 <li><a class="reference internal" href="#id6">Шаг 5</a></li>
+<li><a class="reference internal" href="#id7">Шаг 6</a></li>
 </ul>
 </li>
 </ul>
@@ -188,6 +215,7 @@
 <h3>Related Topics</h3>
 <ul>
   <li><a href="index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="index.html" title="предыдущая глава">Досрок.ру: инструкция по установке</a></li>
   </ul></li>
 </ul>
 </div>
