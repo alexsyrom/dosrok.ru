@@ -1,5 +1,5 @@
 #Деплой на pythonanywhere.com
-Везде ниже предполагается, что вы зашли в свой аккаунт на pythonanywhere и ваш username *dosrok_name* **(далее логин выделяется курсивом)**
+Везде ниже предполагается, что вы зашли в свой аккаунт на pythonanywhere и ваш username dosrok
 
 ##Пошаговая инструкция
 
@@ -11,7 +11,7 @@
 
 Выберите "Manual configuration" из списка опций. Нажмите "Next" и дождитесь завершения процесса создания приложения.
 
-Теперь по адресу *dosrok_name*.pythonanywhere.com вы должны видеть страницу-заглушку.
+Теперь по адресу dosrok.pythonanywhere.com вы должны видеть страницу-заглушку.
 
 Произведите нужные настройки у вашего доменного регистратора -- создайте CNAME record, указывающий на адрес, указанный во вкладке "Web" для вашего приложения (webapp-XXXX.pythonanywhere.com).
 Подробнее на https://www.pythonanywhere.com/wiki/OwnDomains
@@ -19,7 +19,7 @@
 ###Шаг 2
 Перейдите на вкладку "Databases" и задайте пароль (секция MySQL password). 
 
-По умолчанию должна быть создана база *dosrok_name*\ $default. Если же её нет, создайте базу с таким именем в секции Create a database.
+По умолчанию должна быть создана база dosrok$default. Если же её нет, создайте базу с таким именем в секции Create a database.
 
 ###Шаг 3
 
@@ -66,7 +66,7 @@ http://www.miniwebtool.com/django-secret-key-generator/
 DEBUG = False
 
 # измените набор допустимых адресов при необходимости
-ALLOWED_HOSTS = ['dosrok.ru', 'www.dosrok.ru', '*dosrok_name*.pythonanywhere.com']
+ALLOWED_HOSTS = ['dosrok.ru', 'www.dosrok.ru', 'dosrok.pythonanywhere.com']
 
 DATABASES = {
 	'default': {
@@ -108,9 +108,9 @@ python manage.py collectstatic
 import os
 import sys
 
-# assuming your django settings file is at '/home/*dosrok_name*/dosrok.ru/dosrok/settings.py'
-# and your manage.py is is at '/home/*dosrok_name*/dosrok.ru/manage.py'
-path = '/home/*dosrok_name*/dosrok.ru'
+# assuming your django settings file is at '/home/dosrok/dosrok.ru/dosrok/settings.py'
+# and your manage.py is is at '/home/dosrok/dosrok.ru/manage.py'
+path = '/home/dosrok/dosrok.ru'
 if path not in sys.path:
 	sys.path.append(path)
 
@@ -121,22 +121,22 @@ from django.core.wsgi import get_wsgi_application
 application = get_wsgi_application()
 ```
 
-Вернитесь на вкладку "Web". В секции "Virtualenv" настройте путь к окружению. Можно указать или полный путь `/home/*dosrok_name*/.virtualenvs/dosrok` или просто ввести dosrok, система сама дополнит путь.
+Вернитесь на вкладку "Web". В секции "Virtualenv" настройте путь к окружению. Можно указать или полный путь `/home/dosrok/.virtualenvs/dosrok` или просто ввести dosrok, система сама дополнит путь.
 
 В секции "Static files" добавьте следующие записи:
 
 ```shell
 тут таблицу надо
     URL  Directory
-    /static /home/*dosrok_name*/dosrok.ru/static
-    /media /home/*dosrok_name*/dosrok.ru/media
+    /static /home/dosrok/dosrok.ru/static
+    /media /home/dosrok/dosrok.ru/media
 ```
 
 Теперь нажмите на кнопку "Reload" и дождитесь перезагрузки приложения.
 
 ###Шаг 5
 
-Перейдите на *dosrok_name*.pythonanywhere.com/admin и войдите как суперпользователь, которого вы создали в конце шага 3. 
+Перейдите на dosrok.pythonanywhere.com/admin и войдите как суперпользователь, которого вы создали в конце шага 3. 
 
 В административном интерфейсе добавьте первый "Предмет". Пока не создано ни одного предмета, при заходе на главную страницу будет выдана страница с ошибкой. Если в базе существует несколько предметов, то на главной будет информация о предмете, добавленном раньше остальных.
 
