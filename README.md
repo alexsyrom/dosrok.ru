@@ -26,10 +26,9 @@
 Перейдите на вкладку "Consoles" и создайте Bash-консоль
 
 Введите следующую команду, чтобы загрузить исходники
-
-.. code-block:: shell
-
+'''shell
     git clone https://github.com/alexsyrom/dosrok.ru.git
+'''
 
 Перейдите в созданную папку с кодом
 
