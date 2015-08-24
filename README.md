@@ -9,7 +9,7 @@
 
 Укажите нужное доменное имя. Нажмите "Next".
 
-Выберите "Manual configuration" из списка опций. Нажмите "Next" и дождитесь завершения процесса создания приложения.
+Выберите "Manual configuration" из списка опций. Далее выберите Python 3.4 и дождитесь завершения процесса создания приложения.
 
 Теперь по адресу dosrok.pythonanywhere.com вы должны видеть страницу-заглушку.
 
@@ -54,7 +54,12 @@ workon dosrok
 pip install -r requirements.txt
 ```
 
-В папке `dosrok` создайте файл `local_settings.py` со следующим содержанием (обратите внимание на комментарии):
+В папке `dosrok` создайте файл `local_settings.py`:
+```shell
+nano dosrok/local_settings.py
+```
+    
+ со следующим содержанием (обратите внимание на комментарии):
 ```python
 SECRET_KEY = 'kzqoq0=z1_&8lc8#nj=v@!a6-(7a0rvycm*s1+rhe5)s(k%2mr' 
 '''
@@ -71,31 +76,29 @@ ALLOWED_HOSTS = ['dosrok.ru', 'www.dosrok.ru', 'dosrok.pythonanywhere.com']
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'dosrok$default',
-		'USER': 'dosrok',
+		'NAME': 'paulin$default',
+		'USER': 'paulin',
 		'PASSWORD': 'password', # пароль, который вы задали на вкладке "Databases"
-		'HOST': 'dosrok.mysql.pythonanywhere-services.com',
+		'HOST': 'paulin.mysql.pythonanywhere-services.com',
 		'PORT': '3306',
 	}
 }
 ```
 
-Вернитесь в папку проекта
-```shell
-cd ~/dosrok.ru
-```
+Выйти из редактора можно сочетанием Ctrl+X, далее последовательно нажать Y и Enter для сохранения изменений.
+
 
 Подготовьте базу данных к работе
 ```shell
 python manage.py migrate
 ```
 
-Создайте суперпользователя.
+Создайте суперпользователя (последовательно отвечая на вопросы мастера. Внимание: имя пользователя должно быть валидным email-адресом).
 ```shell
 python manage.py createsuperuser
 ```
 
-Соберите static файлы в нужную папку
+Соберите static файлы в нужную папку (на вопрос о записи файлов в существующую папку ответить 'yes', если он задан)
 ```shell
 python manage.py collectstatic
 ```
@@ -132,7 +135,7 @@ application = get_wsgi_application()
     /media /home/dosrok/dosrok.ru/media
 ```
 
-Теперь нажмите на кнопку "Reload" и дождитесь перезагрузки приложения.
+Теперь нажмите на кнопку "Reload" (сверху страницы) и дождитесь перезагрузки приложения.
 
 ###Шаг 5
 
