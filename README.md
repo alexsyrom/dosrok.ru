@@ -76,10 +76,10 @@ ALLOWED_HOSTS = ['dosrok.ru', 'www.dosrok.ru', 'dosrok.pythonanywhere.com']
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.mysql',
-		'NAME': 'paulin$default',
-		'USER': 'paulin',
+		'NAME': 'dosrok$default',
+		'USER': 'dosrok',
 		'PASSWORD': 'password', # пароль, который вы задали на вкладке "Databases"
-		'HOST': 'paulin.mysql.pythonanywhere-services.com',
+		'HOST': 'dosrok.mysql.pythonanywhere-services.com',
 		'PORT': '3306',
 	}
 }
